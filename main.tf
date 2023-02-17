@@ -1,8 +1,3 @@
-provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
-}
-
 resource "aws_key_pair" "example" {
   key_name   = "examplekey"
   public_key = file("~/.ssh/id_rsa.pub")
