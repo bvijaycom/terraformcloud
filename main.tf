@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
 # Find an official Ubuntu AMI
 
 data "aws_ami" "ubuntu" {
