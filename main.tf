@@ -1,25 +1,14 @@
-resource "aws_key_pair" "example" {
-  key_name   = "examplekey"
-  public_key = file("~/.ssh/id_rsa.pub")
+# provider block for aws cloud #
+provider "aws" {
+  region = "us-east-1"
 }
 
-resource "aws_instance" "example" {
-  key_name      = aws_key_pair.example.key_name
-  ami           = "ami-0b5eea76982371e91"
-  instance_type = "t2.micro"
 
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    private_key = file("~/.ssh/id_rsa")
-    host        = self.public_ip
-  }
+resource "aws_vpc" "main" {
+  cidr_block       = "10.0.0.0/16"
+  instance_tenancy = "default"
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo amazon-linux-extras enable nginx1.12",
-      "sudo yum -y install nginx",
-      "sudo systemctl start nginx"
-    ]
+  tags = {
+    Name = "prod-support"
   }
 }
